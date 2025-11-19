@@ -46,6 +46,17 @@ def preprocess(input_data):
         'PU_DO': input_data.PULocationID + "_" + input_data.DOLocationID,
         'trip_distance': input_data.trip_distance,
     }
+    X= dv.transform([input_dict])
+
+    # Names depend on sklearn version
+    try:
+        cols = dv.get_feature_names_out()
+    except AttributeError:
+        cols = dv.get_feature_names()
+
+    X_df = pd.DataFrame(X.toarray(), columns=cols)
+
+    return X_df
 
     return dv.transform(input_dict)
 
